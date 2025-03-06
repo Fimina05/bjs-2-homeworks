@@ -1,28 +1,31 @@
-"use strict";
-
+// Задача №1
 function solveEquation(a, b, c) {
-  let arr = [];
-  let D = b ** 2 - 4 * a * c;
+  const discriminant = b * b - 4 * a * c;
 
-  if (D < 0) {
-    return arr;
-  } else if (D === 0) {
-    let x = -b / (2 * a);
-    arr.push(x);
+  if (discriminant > 0) {
+    const x1 = (-b - Math.sqrt(discriminant)) / (2 * a);
+    const x2 = (-b + Math.sqrt(discriminant)) / (2 * a);
+    return [x1, x2];
+  } else if (discriminant === 0) {
+    const x = -b / (2 * a);
+    return [x];
   } else {
-    let x1 = (-b + Math.sqrt(D)) / (2 * a);
-    let x2 = (-b - Math.sqrt(D)) / (2 * a);
-    arr.push(x1, x2);
+    return [];
   }
-
-  return arr;
 }
 
+// Задача №2
 function calculateTotalMortgage(percent, contribution, amount, countMonths) {
-  let P = (percent / 100) / 12;
-  let S = amount - contribution;
-  let monthlyPayment = S * (P + (P / ((1 + P) ** countMonths - 1)));
-  let totalAmount = monthlyPayment * countMonths;
+  const loanAmount = amount - contribution;
+  const monthlyRate = percent / 100 / 12;
+  const denominator = Math.pow(1 + monthlyRate, countMonths) - 1;
 
-  return Number(totalAmount.toFixed(2));
+  if (denominator === 0) {
+    return loanAmount;
+  }
+
+  const monthlyPayment = loanAmount * monthlyRate * Math.pow(1 + monthlyRate, countMonths) / denominator;
+  const totalAmount = monthlyPayment * countMonths;
+
+  return +totalAmount.toFixed(2);
 }
