@@ -1,31 +1,18 @@
 // Задача №1
 function solveEquation(a, b, c) {
-  const discriminant = b * b - 4 * a * c;
-
-  if (discriminant > 0) {
-    const x1 = (-b - Math.sqrt(discriminant)) / (2 * a);
-    const x2 = (-b + Math.sqrt(discriminant)) / (2 * a);
-    return [x1, x2];
-  } else if (discriminant === 0) {
-    const x = -b / (2 * a);
-    return [x];
-  } else {
-    return [];
-  }
+  const d = b * b - 4 * a * c;    
+  if (d < 0) return [];    
+  if (d === 0) return [-b / (2 * a)];  
+  const x1 = (-b + Math.sqrt(d)) / (2 * a);  
+  const x2 = (-b - Math.sqrt(d)) / (2 * a);  
+  return [x1, x2]; 
 }
 
+
 // Задача №2
-function calculateTotalMortgage(percent, contribution, amount, countMonths) {
-  const loanAmount = amount - contribution;
-  const monthlyRate = percent / 100 / 12;
-  const denominator = Math.pow(1 + monthlyRate, countMonths) - 1;
-
-  if (denominator === 0) {
-    return loanAmount;
-  }
-
-  const monthlyPayment = loanAmount * monthlyRate * Math.pow(1 + monthlyRate, countMonths) / denominator;
-  const totalAmount = monthlyPayment * countMonths;
-
-  return +totalAmount.toFixed(2);
+function calculateTotalMortgage(percent, contribution, amount, months) {
+  const i = percent / 100 / 12;  
+  const loanBody = amount - contribution;  
+  const monthlyPayment = loanBody * (i + i / (Math.pow(1 + i, months) - 1));  
+  return +(monthlyPayment * months).toFixed(2);  
 }
